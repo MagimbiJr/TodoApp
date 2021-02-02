@@ -24,6 +24,9 @@ public class Task {
         this.endTime = endTime;
     }
 
+    public int getTaskId() {
+        return taskId;
+    }
 
     public void setTaskId(int taskId) {
         this.taskId = taskId;

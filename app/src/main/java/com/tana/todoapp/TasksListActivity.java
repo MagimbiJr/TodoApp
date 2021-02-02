@@ -5,6 +5,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,7 +19,10 @@ import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
+import java.util.List;
+
 public class TasksListActivity extends AppCompatActivity {
+    private TaskViewModel mTaskViewModel;
     private DrawerLayout mDrawer;
 
     @Override
@@ -32,6 +40,23 @@ public class TasksListActivity extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //RecyclerView Setup
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.task_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        TaskAdapter adapter = new TaskAdapter(this);
+        recyclerView.setAdapter(adapter);
+
+        //Data handler
+        mTaskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+        mTaskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                adapter.setTask(tasks);
+            }
+        });
 
     }
 
