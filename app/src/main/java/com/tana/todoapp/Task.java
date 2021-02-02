@@ -1,13 +1,12 @@
 package com.tana.todoapp;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "task_table")
 public class Task {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int taskId;
     @ColumnInfo(name = "task_name")
     private String taskName;
@@ -18,18 +17,13 @@ public class Task {
     @ColumnInfo(name = "end_time")
     private String endTime;
 
-    public Task(@NonNull int taskId, @NonNull String taskName, @NonNull String taskDate,
-                @NonNull String startTime, @NonNull String endTime) {
-        this.taskId = taskId;
+    public Task(String taskName, String taskDate, String startTime, String endTime) {
         this.taskName = taskName;
         this.taskDate = taskDate;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public int getTaskId() {
-        return taskId;
-    }
 
     public void setTaskId(int taskId) {
         this.taskId = taskId;
@@ -39,31 +33,16 @@ public class Task {
         return taskName;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
     public String getTaskDate() {
         return taskDate;
-    }
-
-    public void setTaskDate(String taskDate) {
-        this.taskDate = taskDate;
     }
 
     public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
     public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
 }
