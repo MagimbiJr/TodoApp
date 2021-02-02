@@ -1,7 +1,6 @@
 package com.tana.todoapp;
 
 import android.app.Application;
-import android.content.AsyncQueryHandler;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -18,26 +17,81 @@ public class TaskRepository {
         mAllTasks = mTaskDao.getAllTasks();
     }
 
-    LiveData<List<Task>> getAllTasks() {
-        return mAllTasks;
-    }
-
     public void insert(Task task) {
         new insertAsyncTask(mTaskDao).execute(task);
     }
 
-    //Insert new task asynchronously
+    public void update(Task task) {
+        new updateAsyncTask(mTaskDao).execute(task);
+    }
+
+    public void delete(Task task) {
+        new deleteAsyncTask(mTaskDao).execute(task);
+    }
+
+    public void deleteAll() {
+        new deleteAllAsyncTask(mTaskDao).execute();
+    }
+
+    LiveData<List<Task>> getAllTasks() {
+        return mAllTasks;
+    }
+
+
+    //Asynchronously Room database operation
 
     private static class insertAsyncTask extends AsyncTask<Task, Void, Void> {
-        private TaskDao mAsyncTaskDao;
+        private TaskDao mAsyncInsertTask;
 
         public insertAsyncTask(TaskDao taskDao) {
-            mAsyncTaskDao = taskDao;
+            mAsyncInsertTask = taskDao;
         }
 
         @Override
         protected Void doInBackground(Task... tasks) {
-            mAsyncTaskDao.insertTask(tasks[0]);
+            mAsyncInsertTask.insertTask(tasks[0]);
+            return null;
+        }
+    }
+
+    private static class updateAsyncTask extends AsyncTask<Task, Void, Void> {
+        private TaskDao mAsyncUpdateTask;
+
+        public updateAsyncTask(TaskDao taskDao) {
+            mAsyncUpdateTask = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Task... tasks) {
+            mAsyncUpdateTask.update(tasks[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Task, Void, Void> {
+        private TaskDao mAsyncDeleteTask;
+
+        public deleteAsyncTask(TaskDao taskDao) {
+            mAsyncDeleteTask = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Task... tasks) {
+            mAsyncDeleteTask.delete(tasks[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+        private TaskDao mAsyncDeleteAllTask;
+
+        public deleteAllAsyncTask(TaskDao taskDao) {
+            mAsyncDeleteAllTask = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncDeleteAllTask.deleteAll();
             return null;
         }
     }
