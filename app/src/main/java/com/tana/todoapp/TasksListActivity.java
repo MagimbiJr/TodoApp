@@ -2,6 +2,7 @@ package com.tana.todoapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,13 +12,20 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.tana.todoapp.Dialogs.NewTaskDialog;
 
 import java.util.List;
 
@@ -40,6 +48,17 @@ public class TasksListActivity extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //Add new task
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewTaskDialog bottomSheet = new NewTaskDialog(getApplication());
+                bottomSheet.show(getSupportFragmentManager(), "bottom sheet dialog");
+            }
+        });
 
         //RecyclerView Setup
 
@@ -69,13 +88,21 @@ public class TasksListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_profile:
-                Toast.makeText(this, "Profile Selected", Toast.LENGTH_SHORT).show();
-            case R.id.action_setting:
-                Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_profile) {
+            Toast.makeText(this, "Profile Selected", Toast.LENGTH_SHORT).show();
         }
+        if (itemId == R.id.action_setting) {
+            Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+//        switch (item.getItemId()) {
+//            case R.id.action_profile:
+//
+//            case R.id.action_setting:
+//
+//            default:
+//
+//        }
     }
 }
