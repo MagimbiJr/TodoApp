@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TodoApp">
+        <activity android:name=".EditTaskActivity"
+            android:parentActivityName=".TasksListActivity"
+            android:label="Edit Task"/>
         <activity
             android:name=".TasksListActivity"
             android:theme="@style/LocalTheme">

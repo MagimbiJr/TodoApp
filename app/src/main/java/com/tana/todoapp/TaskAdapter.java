@@ -16,16 +16,18 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private final Context mContext;
     private List<Task> mTask = new ArrayList<>();
+    private final OnTaskClickListener mOnTaskClickListener;
 
-    public TaskAdapter(Context context) {
+    public TaskAdapter(Context context, OnTaskClickListener taskClickListener) {
         this.mContext = context;
+        mOnTaskClickListener = taskClickListener;
     }
 
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.task_item, parent, false);
-        return new TaskViewHolder(itemView);
+        return new TaskViewHolder(itemView, mOnTaskClickListener);
     }
 
     @Override
@@ -44,15 +46,24 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         notifyDataSetChanged();
     }
 
-    public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView mTvTaskName, mTvDay, mTvStartTime, mTvEndTime;
+    public Task getTaskAt(int position) {
+        return mTask.get(position);
+    }
 
-        public TaskViewHolder(@NonNull View itemView) {
+    public class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView mTvTaskName, mTvDay, mTvStartTime, mTvEndTime;
+        OnTaskClickListener mOnTaskClickListener;
+
+        public TaskViewHolder(@NonNull View itemView, OnTaskClickListener onTaskClickListener) {
             super(itemView);
             mTvTaskName = (TextView) itemView.findViewById(R.id.text_view_task_name);
             mTvDay = (TextView) itemView.findViewById(R.id.text_view_day);
             mTvStartTime = (TextView) itemView.findViewById(R.id.text_view_start_time);
             mTvEndTime = (TextView) itemView.findViewById(R.id.text_view_end_time);
+
+            mOnTaskClickListener = onTaskClickListener;
+
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Task task) {
@@ -61,5 +72,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             mTvStartTime.setText(task.getStartTime());
             mTvEndTime.setText(task.getEndTime());
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (mOnTaskClickListener != null && position != RecyclerView.NO_POSITION) {
+                mOnTaskClickListener.onTaskClick(mTask.get(position));
+            }
+        }
+    }
+
+    public interface OnTaskClickListener {
+        void onTaskClick(Task task);
     }
 }

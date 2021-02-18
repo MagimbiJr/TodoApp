@@ -26,6 +26,7 @@ public class NewTaskDialog extends BottomSheetDialogFragment {
     private TaskTimePicker mStartTimePicker;
     private TaskDatePicker mDatePicker;
     private final Application mApplication;
+
     public NewTaskDialog(@NonNull Application application){
         mApplication = application;
     }
@@ -77,14 +78,37 @@ public class NewTaskDialog extends BottomSheetDialogFragment {
     }
 
     private void saveTaskToDb() {
-        String addedTask = mAddTaskInput.getText().toString();
-        String date = mDatePicker.pickedDate();
-        String startTime = mStartTimePicker.startTimeValue();
-        String endTime = mEndTimePicker.endTimeValue();
+        String addedTask;
+        String date;
+        String startTime;
+        String endTime;
 
-        if (addedTask.trim().isEmpty()) {
-            Toast.makeText(mApplication, "Can't save an empty task", Toast.LENGTH_SHORT).show();
+        if (mAddTaskInput.getText().toString().trim().isEmpty()) {
+            Toast.makeText(mApplication, "Can not save an empty task", Toast.LENGTH_SHORT).show();
             return;
+        } else {
+            addedTask = mAddTaskInput.getText().toString();
+        }
+
+        if (mDatePicker == null) {
+            Toast.makeText(mApplication, "Please pick a date", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            date = mDatePicker.pickedDate();
+        }
+
+        if (mStartTimePicker == null) {
+            Toast.makeText(mApplication, "Please pick a starting time", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            startTime = mStartTimePicker.startTimeValue();
+        }
+
+        if (mEndTimePicker == null) {
+            Toast.makeText(mApplication, "Please pick an ending time", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            endTime = mEndTimePicker.endTimeValue();
         }
 
         Task task = new Task(addedTask, date, startTime, endTime);
@@ -92,10 +116,5 @@ public class NewTaskDialog extends BottomSheetDialogFragment {
         TaskViewModel viewModel = new TaskViewModel(mApplication);
 
         viewModel.insert(task);
-
-
-
-        // let viewModel = new ViewModel(this.application)
-        //viewModel.insert(addedTask)
     }
 }
