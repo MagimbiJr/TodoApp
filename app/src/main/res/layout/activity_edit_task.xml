@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditTaskActivity"
+    android:padding="8dp">
+
+    <EditText
+        android:id="@+id/updateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp" />
+
+    <ImageView
+        android:id="@+id/dateCalenderIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_calendar"
+        android:layout_below="@+id/updateEditText"
+        app:tint="@color/green_lighter" />
+    
+    <TextView
+        android:id="@+id/dueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/dateCalenderIcon"
+        android:layout_below="@id/updateEditText"
+        android:paddingTop="8dp"
+        android:textSize="17sp"
+        android:layout_marginStart="4dp"
+        android:hint="@string/due_date" />
+
+    <ImageView
+        android:id="@+id/startTimerIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_timer"
+        android:layout_below="@+id/dateCalenderIcon"
+        app:tint="@color/green_lighter" />
+
+    <TextView
+        android:id="@+id/dueStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/startTimerIcon"
+        android:layout_below="@+id/dueDate"
+        android:paddingTop="8dp"
+        android:textSize="17sp"
+        android:layout_marginStart="4dp"
+        android:hint="@string/start_time" />
+
+    <ImageView
+        android:id="@+id/endTimerIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_timer"
+        android:layout_below="@+id/startTimerIcon"
+        app:tint="@color/green_lighter" />
+
+    <TextView
+        android:id="@+id/dueEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dueStartTime"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/endTimerIcon"
+        android:paddingTop="8dp"
+        android:textSize="17sp"
+        android:layout_marginStart="4dp"
+        android:hint="@string/end_time" />
+
+</RelativeLayout>

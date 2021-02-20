@@ -2,6 +2,7 @@ package com.tana.todoapp;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -63,7 +64,10 @@ public class TaskRepository {
 
         @Override
         protected Void doInBackground(Task... tasks) {
-            mAsyncUpdateTask.update(tasks[0]);
+            Log.d("Repo", "doInBackground: " + tasks[0]);
+            int response = mAsyncUpdateTask.update(tasks[0]);
+            Log.d("Update", "doInBackground: " + tasks.getClass());
+           // Log.d("Repo", "doInBackground: " + response);
             return null;
         }
     }

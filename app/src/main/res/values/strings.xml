@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Task Keeper</string>
-    
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_profile">Profile</string>
@@ -9,4 +9,12 @@
     <string name="day_of_task">Day of task</string>
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
+    <string name="add_task">Add Task</string>
+    <string name="set_date">Set Date</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="delete_all_task">Delete All Task</string>
+    <string name="due_date">Due date</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
 </resources>
